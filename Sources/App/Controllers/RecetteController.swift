@@ -13,7 +13,10 @@ struct RecetteController: RouteCollection{
         recettes.get(use: index)
         recettes.post(use:create)
         recettes.put(use:update)
-        recettes.delete(use: delete)
+        recettes.group(":recetteID") { recette in
+            recette.delete(use:delete)
+            
+        }
     }
     //CRUD
     // get : index
@@ -52,16 +55,24 @@ struct RecetteController: RouteCollection{
                     .transform(to: .ok)
             }
     }
-    /* A finir*/
-    /*
-    func delete(req: Request) throws -> EventLoopFuture<HTTPStatus> {
-        guard let id = req.parameters.get("id", as: UUID.self) else {
-            throw Abort(.badRequest)
-        }
-        return Todo.find(id, on: req.db)
+    
+    func delete(req: Request) throws ->
+    EventLoopFuture<HTTPStatus>{
+        
+     
+        
+        Recette
+            // recherche une recette en fonction de ce qu'on se passe dans l'url
+            .find(req.parameters
+            // récupération de la recette avec l'id
+            .get("recetteID"), on: req.db)
+            // on la déballe si trouvé sinon on renvoie un status d'errer
             .unwrap(or: Abort(.notFound))
-            .flatMap { $0.delete(on: req.db) }
-            .map { .ok }
-    }*/
+            // suppression en base de données
+            .flatMap{$0.delete(on: req.db)
+                .transform(to: .ok)
+            }
+        
+    }
     
 }
