@@ -10,6 +10,9 @@ import Vapor
 import Fluent
 
 final class Recette: Model, Content {
+    init() {
+    }
+    
     static var schema: String = "recette"
     @ID(key: .id)
     var id:UUID?
