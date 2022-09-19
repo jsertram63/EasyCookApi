@@ -17,6 +17,7 @@ struct RecetteController: RouteCollection{
             recette.delete(use:delete)
             
         }
+        recettes.get(":recetteID", use: getHandler)
     }
     //CRUD
     // get : index
@@ -73,6 +74,13 @@ struct RecetteController: RouteCollection{
                 .transform(to: .ok)
             }
         
+    }
+    
+    func getHandler(_ req: Request)
+      -> EventLoopFuture<Recette> {
+      // 4
+      Recette.find(req.parameters.get("recetteID"), on: req.db)
+          .unwrap(or: Abort(.notFound))
     }
     
 }

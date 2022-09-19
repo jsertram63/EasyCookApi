@@ -16,9 +16,12 @@ final class Recette: Model, Content {
     static var schema: String = "recette"
     @ID(key: .id)
     var id:UUID?
+    
     @Field(key:"name")
     var name:String
+    
     @Field(key:"imageURL")
+    
     var imageURL:String
     @Field(key:"description")
     var description: String

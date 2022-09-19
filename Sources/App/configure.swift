@@ -17,6 +17,8 @@ public func configure(_ app: Application) throws {
 
     //app.migrations.add(CreateTodo())
     app.migrations.add(CreateRecette())
+    app.migrations.add(CreateIngredient())
+    app.logger.logLevel = .debug
     try app.autoMigrate().wait()
     // register routes
     try routes(app)
