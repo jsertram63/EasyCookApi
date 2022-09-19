@@ -22,7 +22,7 @@ struct RecetteController: RouteCollection{
     //CRUD
     // get : index
     func index(req: Request) throws -> EventLoopFuture<[Recette]>{
-        return Recette.query(on: req.db).all()
+        return Recette.query(on: req.db).with(\.$ingredients).all()
     }
     // post : create
     func create(req:Request) throws -> EventLoopFuture<HTTPStatus> {

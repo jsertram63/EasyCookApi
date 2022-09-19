@@ -24,6 +24,7 @@ final class Ingredient: Model, Content {
     @Parent(key:"recetteID")
     var recette:Recette
     
+    
     init(id: UUID? = nil, name: String, recetteID: Recette.IDValue) {
         self.id = id
         self.name = name

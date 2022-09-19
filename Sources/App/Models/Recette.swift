@@ -26,6 +26,10 @@ final class Recette: Model, Content {
     @Field(key:"description")
     var description: String
     
+    
+    @Children(for: \.$recette)
+    var ingredients:[Ingredient]
+    
     init(id:UUID,name:String, imageURL:String,description:String){
         self.id = id
         self.name = name
