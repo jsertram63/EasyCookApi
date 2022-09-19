@@ -1,0 +1,30 @@
+lancer le docker :
+docker compose db up 
+
+les recettes
+// GET pour obtenir les recettes
+127.0.0.1:8080/recette
+
+// POST pour insérer une recette
+127.0.0.1:8080/recette
+
+le json envoyé :
+{
+	"name":"lentilles",
+	"description":"lentilles du puy",
+	"imageURL":"http://wwww.pierric-cook.com/pizza_maison.png"
+}
+
+// PUT pour mettre une recette à jour
+127.0.0.1:8080/recette
+json envoyé
+   {
+        "id": "DC7E4AFB-F503-4CAD-A365-E15A80D65D0E",
+        "imageURL": "",
+        "description": "avec des bonnes prunes",
+        "name": "clafoutis"
+    }
+
+// DELETE suppression d'une recette
+127.0.0.1:8080/recette/<id> 
+
