@@ -15,6 +15,16 @@ struct IngredientController: RouteCollection{
         ingredients.get(use: index)
         ingredients.post(use: create)
         ingredients.put(use:update)
+        ingredients.post(
+            ":ingredientID",
+            "categories",
+            ":categoryID",
+            use: addCategoriesHandler)
+        ingredients.get(
+            ":ingredientID",
+            "categories",
+            use: getCategoriesHandler)
+
         ingredients.group(":ingredientID") { ingredient in
             ingredient.delete(use:delete)
         }
@@ -80,6 +90,39 @@ struct IngredientController: RouteCollection{
         
     }
     
+    func addCategoriesHandler(_ req: Request)
+      -> EventLoopFuture<HTTPStatus> {
+      // 2
+      let ingredientQuery =
+        Ingredient.find(req.parameters.get("ingredientID"), on: req.db)
+          .unwrap(or: Abort(.notFound))
+      let categoryQuery =
+        Category.find(req.parameters.get("categoryID"), on: req.db)
+          .unwrap(or: Abort(.notFound))
+      // 3
+      return ingredientQuery.and(categoryQuery)
+        .flatMap { acronym, category in
+          acronym
+            .$categories
+            // 4
+            .attach(category, on: req.db)
+            .transform(to: .created)
+        }
+    }
+    
+    
+    func getCategoriesHandler(_ req: Request)
+      -> EventLoopFuture<[Category]> {
+          
+       
+      // 2
+          Ingredient.find(req.parameters.get("ingredientID"), on: req.db)
+              .unwrap(or: Abort(.notFound))
+        .flatMap { ingredient in
+          // 3
+          ingredient.$categories.query(on: req.db).all()
+        }
+    }
 
 
 

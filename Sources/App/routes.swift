@@ -10,6 +10,6 @@ func routes(_ app: Application) throws {
     let usersController = UsersController()
     // 2
     try app.register(collection: usersController)
-
+    try app.register(collection: CategoriesController())
 }
 

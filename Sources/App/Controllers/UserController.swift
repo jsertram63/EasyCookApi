@@ -41,7 +41,9 @@ struct UsersController: RouteCollection {
     func getHandler(_ req: Request)
       -> EventLoopFuture<Utilisateur> {
       // 4
-      Utilisateur.find(req.parameters.get("userID"), on: req.db)
+          
+     Utilisateur.find(req.parameters.get("userID"), on: req.db)
           .unwrap(or: Abort(.notFound))
+          
     }
 }

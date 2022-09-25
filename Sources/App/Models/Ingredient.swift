@@ -24,6 +24,12 @@ final class Ingredient: Model, Content {
     @Parent(key:"recetteID")
     var recette:Recette
     
+    @Siblings(
+      through: IngredientCategoryPivot.self,
+      from: \.$ingredient,
+      to: \.$category)
+    var categories: [Category]
+    
     
     init(id: UUID? = nil, name: String, recetteID: Recette.IDValue) {
         self.id = id
