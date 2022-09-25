@@ -26,9 +26,13 @@ struct RecetteController: RouteCollection{
     }
     // post : create
     func create(req:Request) throws -> EventLoopFuture<HTTPStatus> {
-        let recette = try req.content.decode(Recette.self)
+        
+        let data = try req.content.decode(CreateRecetteUserData.self)
+        
+        let recette = Recette(id: data.userID, name:data.name, imageURL:data.imageUrl, description: data.description, userID: data.userID)
+        //let recette = try req.content.decode(Recette.self)
         return recette
-            .save(on: req.db)
+            .save(on: req.db).map { recette }
             .transform(to: .ok) // 200 si OK
     }
     
@@ -83,4 +87,11 @@ struct RecetteController: RouteCollection{
           .unwrap(or: Abort(.notFound))
     }
     
+}
+
+struct CreateRecetteUserData: Content {
+  let name: String
+  let imageUrl: String
+  let userID: UUID
+  let description: String
 }
