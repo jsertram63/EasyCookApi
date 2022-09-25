@@ -14,7 +14,7 @@ public func configure(_ app: Application) throws {
         password: Environment.get("DATABASE_PASSWORD") ?? "vapor_password",
         database: Environment.get("DATABASE_NAME") ?? "vapor_database"
     ), as: .psql)
-
+    app.http.server.configuration.port = 8080
     //app.migrations.add(CreateTodo())
     app.migrations.add(CreateRecette())
     app.migrations.add(CreateIngredient())
