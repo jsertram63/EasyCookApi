@@ -35,7 +35,7 @@ final class Recette: Model, Content {
     
     
     
-    init(id:UUID?,name:String, imageURL:String,description:String,userID: Utilisateur.IDValue){
+    init(id:UUID? = nil,name:String, imageURL:String,description:String,userID: Utilisateur.IDValue){
         self.id = id
         self.name = name
         self.description = description

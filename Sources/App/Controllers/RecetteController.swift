@@ -29,7 +29,8 @@ struct RecetteController: RouteCollection{
         
         let data = try req.content.decode(CreateRecetteUserData.self)
         
-        let recette = Recette(id: data.userID, name:data.name, imageURL:data.imageUrl, description: data.description, userID: data.userID)
+        let recette = Recette(name:data.name, imageURL:data.imageUrl, description: data.description, userID: data.userID)
+
         //let recette = try req.content.decode(Recette.self)
         return recette
             .save(on: req.db).map { recette }

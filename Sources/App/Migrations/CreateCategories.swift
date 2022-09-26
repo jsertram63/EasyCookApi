@@ -8,22 +8,15 @@
 import Foundation
 import Fluent
 
-// 1
-struct CreateUser: Migration {
-  // 2
+struct CreateCategory: Migration {
   func prepare(on database: Database) -> EventLoopFuture<Void> {
-    // 3
-    database.schema("utilisateurs")
-      // 4
+    database.schema("categoriesDB")
       .id()
       .field("name", .string, .required)
-      .field("username", .string, .required)
-      // 6
       .create()
   }
   
-  // 7
   func revert(on database: Database) -> EventLoopFuture<Void> {
-    database.schema("utilisateurs").delete()
+    database.schema("categoriesDB").delete()
   }
 }

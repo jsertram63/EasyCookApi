@@ -13,6 +13,7 @@ struct UsersController: RouteCollection {
   // 2
   func boot(routes: RoutesBuilder) throws {
     // 3
+      // localhost:8080/utilisateurs
     let usersRoute = routes.grouped("utilisateurs")
     // 4
     usersRoute.post(use: createHandler)
