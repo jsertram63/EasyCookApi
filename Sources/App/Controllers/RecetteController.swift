@@ -18,11 +18,25 @@ struct RecetteController: RouteCollection{
             
         }
         recettes.get(":recetteID", use: getHandler)
+        
+        
+        let basicAuthMiddleware = Utilisateur.authenticator()
+        // 2
+        let guardAuthMiddleware = Utilisateur.guardMiddleware()
+        // 3
+        let protected = recettes.grouped(
+          basicAuthMiddleware,
+          guardAuthMiddleware)
+        // 4
+        protected.post(use: create)
     }
     //CRUD
     // get : index
     func index(req: Request) throws -> EventLoopFuture<[Recette]>{
-        return Recette.query(on: req.db).with(\.$ingredients).all()
+        return Recette.query(on: req.db)
+            .with(\.$ingredients).all()
+            
+        
     }
     // post : create
     func create(req:Request) throws -> EventLoopFuture<HTTPStatus> {
@@ -86,6 +100,16 @@ struct RecetteController: RouteCollection{
       // 4
       Recette.find(req.parameters.get("recetteID"), on: req.db)
           .unwrap(or: Abort(.notFound))
+    }
+    
+    func getUserHandler(_ req: Request)
+      -> EventLoopFuture<Utilisateur.Public> {
+      Recette.find(req.parameters.get("recetteID"), on: req.db)
+      .unwrap(or: Abort(.notFound))
+      .flatMap { recette in
+        // 2
+        recette.$user.get(on: req.db).convertToPublic()
+      }
     }
     
 }

@@ -12,8 +12,13 @@ struct IngredientController: RouteCollection{
 
     func boot(routes: RoutesBuilder) throws {
         let ingredients = routes.grouped("ingredients")
+        
+        let basicAuthMiddleware = Utilisateur.authenticator()
+        // 2
+        let guardAuthMiddleware = Utilisateur.guardMiddleware()
+        
         ingredients.get(use: index)
-        ingredients.post(use: create)
+       // ingredients.post(use: create)
         ingredients.put(use:update)
         ingredients.post(
             ":ingredientID",
@@ -28,6 +33,14 @@ struct IngredientController: RouteCollection{
         ingredients.group(":ingredientID") { ingredient in
             ingredient.delete(use:delete)
         }
+        
+     
+        // 3
+        let protected = ingredients.grouped(
+          basicAuthMiddleware,
+          guardAuthMiddleware)
+        // 4
+        protected.post(use: create)
     }
    
     

@@ -29,9 +29,13 @@ final class Recette: Model, Content {
     @Parent(key: "userID")
     var user: Utilisateur
     
+   
+    
     
     @Children(for: \.$recette)
     var ingredients:[Ingredient]
+    
+   
     
     
     
@@ -41,5 +45,6 @@ final class Recette: Model, Content {
         self.description = description
         self.imageURL = imageURL
         self.$user.id = userID
+    
     }
 }
