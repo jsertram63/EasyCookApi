@@ -14,10 +14,11 @@ struct CreateRecette : Migration {
         return database
             .schema("recette")
             .id()
-            .field("name",.string,.required)
-            .field("description",.string, .required)
-            .field("imageURL",.string, .required)
-            .field("userID", .uuid, .required,.references("utilisateurs", "id"))
+            .field("name", .string, .required)
+            .field("imageURL", .string, .required)
+            .field("description", .string, .required)
+            .field("favoris", .bool, .required)
+            .field("userID", .uuid, .required, .references("utilisateurs", "id"))
             .create()
     }
     
@@ -25,6 +26,4 @@ struct CreateRecette : Migration {
     func revert(on database: Database) -> EventLoopFuture<Void> {
         return database.schema("recette").delete()
     }
-    
-    
 }
