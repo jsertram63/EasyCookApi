@@ -18,7 +18,7 @@ struct CreateUser: Migration {
       .id()
       .field("name", .string, .required)
       .field("username", .string, .required)
-      .field("password",.string, .required)
+      .field("password", .string, .required)
       // 6
       .unique(on: "username")
       .create()

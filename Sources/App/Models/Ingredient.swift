@@ -10,33 +10,25 @@ import Fluent
 import Vapor
 
 final class Ingredient: Model, Content {
-    init() {
-    }
+    init() {}
+    
     static var schema = "ingredients"
     
     @ID
-    var id:UUID?
+    var id: UUID?
     
-    @Field(key:"name")
-    var name:String
+    @Field(key: "name")
+    var name: String
     
     // relation Parent - enfants // Décorateur
-    @Parent(key:"recetteID")
-    var recette:Recette
-    
-    @Siblings(
-      through: IngredientCategoryPivot.self,
-      from: \.$ingredient,
-      to: \.$category)
-    var categories: [Category]
-    
+    @Parent(key: "recetteID")
+    var recette: Recette
     
     init(id: UUID? = nil, name: String, recetteID: Recette.IDValue) {
         self.id = id
         self.name = name
         self.$recette.id = recetteID
     }
-    
 }
 
 

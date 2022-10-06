@@ -20,17 +20,16 @@ struct RecetteController: RouteCollection{
         
         recettes.get(":recetteID", use: getHandler)
         
-        
-        let basicAuthMiddleware = Utilisateur.authenticator()
-        // 2
-        let guardAuthMiddleware = Utilisateur.guardMiddleware()
-        // 3
-        let protected = recettes.grouped(
-            basicAuthMiddleware,
-            guardAuthMiddleware
-        )
-        // 4
-        protected.post(use: create)
+        //        let basicAuthMiddleware = Utilisateur.authenticator()
+        //        // 2
+        //        let guardAuthMiddleware = Utilisateur.guardMiddleware()
+        //        // 3
+        //        let protected = recettes.grouped(
+        //            basicAuthMiddleware,
+        //            guardAuthMiddleware
+        //        )
+        //        // 4
+        //        protected.post(use: create)
     }
     
     /* **************************************** CRUD *************************** */
@@ -49,8 +48,9 @@ struct RecetteController: RouteCollection{
         
         let recette = Recette(
             name: data.name,
-            imageURL: data.imageUrl,
+            imageURL: data.imageURL,
             description: data.description,
+            categorie: data.categorie,
             favoris: data.favoris,
             userID: data.userID
         )
@@ -78,6 +78,7 @@ struct RecetteController: RouteCollection{
                 $0.name = recetteToUpdate.name
                 $0.imageURL = recetteToUpdate.imageURL
                 $0.description = recetteToUpdate.description
+                $0.categorie = recetteToUpdate.categorie
                 $0.favoris = recetteToUpdate.favoris
                 
                 // sauvegarder en db
@@ -99,7 +100,6 @@ struct RecetteController: RouteCollection{
             .flatMap{$0.delete(on: req.db)
                     .transform(to: .ok)
             }
-        
     }
     
     func getHandler(_ req: Request) -> EventLoopFuture<Recette> {
@@ -120,9 +120,10 @@ struct RecetteController: RouteCollection{
 }
 
 struct CreateRecetteUserData: Content {
-    let name: String
-    let imageUrl: String
-    let description: String
-    let favoris: Bool
     let userID: UUID
+    let name: String
+    let imageURL: String
+    let description: String
+    let categorie: String
+    let favoris: Bool
 }

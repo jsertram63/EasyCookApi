@@ -23,12 +23,16 @@ final class Recette: Model, Content {
     var name: String
     
     // Champ imageURL
-    @Field(key:"imageURL")
+    @Field(key: "imageURL")
     var imageURL: String
     
     // Champ description
     @Field(key: "description")
     var description: String
+    
+    // Champ catégorie
+    @Field(key: "categorie")
+    var categorie: String
     
     // Champ favorite
     @Field(key: "favoris")
@@ -40,11 +44,12 @@ final class Recette: Model, Content {
     @Children(for: \.$recette)
     var ingredients: [Ingredient]
     
-    init(id:UUID? = nil, name: String, imageURL: String, description: String, favoris: Bool, userID: Utilisateur.IDValue){
+    init(id:UUID? = nil, name: String, imageURL: String, description: String, categorie: String, favoris: Bool, userID: Utilisateur.IDValue){
         self.id = id
         self.name = name
         self.imageURL = imageURL
         self.description = description
+        self.categorie = categorie
         self.favoris = favoris
         self.$user.id = userID
     }

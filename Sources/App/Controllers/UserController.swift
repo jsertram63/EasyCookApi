@@ -47,6 +47,5 @@ struct UsersController: RouteCollection {
      Utilisateur.find(req.parameters.get("userID"), on: req.db)
           .unwrap(or: Abort(.notFound))
           .convertToPublic()
-          
     }
 }

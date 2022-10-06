@@ -17,6 +17,7 @@ struct CreateRecette : Migration {
             .field("name", .string, .required)
             .field("imageURL", .string, .required)
             .field("description", .string, .required)
+            .field("categorie", .string, .required)
             .field("favoris", .bool, .required)
             .field("userID", .uuid, .required, .references("utilisateurs", "id"))
             .create()
