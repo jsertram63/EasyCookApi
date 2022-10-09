@@ -44,7 +44,7 @@ final class Recette: Model, Content {
     @Children(for: \.$recette)
     var ingredients: [Ingredient]
     
-    init(id:UUID? = nil, name: String, imageURL: String, description: String, categorie: String, favoris: Bool, userID: Utilisateur.IDValue){
+    init(id: UUID? = nil, name: String, imageURL: String, description: String, categorie: String, favoris: Bool, userID: Utilisateur.IDValue) {
         self.id = id
         self.name = name
         self.imageURL = imageURL

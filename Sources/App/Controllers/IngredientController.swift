@@ -13,9 +13,9 @@ struct IngredientController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         let ingredients = routes.grouped("ingredients")
         
-        let basicAuthMiddleware = Utilisateur.authenticator()
-        // 2
-        let guardAuthMiddleware = Utilisateur.guardMiddleware()
+//        let basicAuthMiddleware = Utilisateur.authenticator()
+//        // 2
+//        let guardAuthMiddleware = Utilisateur.guardMiddleware()
         
         ingredients.get(use: index)
         ingredients.post(use: create)
@@ -25,12 +25,12 @@ struct IngredientController: RouteCollection {
             ingredient.delete(use: delete)
         }
         
-        // 3
-        let protected = ingredients.grouped(
-            basicAuthMiddleware,
-            guardAuthMiddleware)
-        // 4
-        protected.post(use: create)
+//        // 3
+//        let protected = ingredients.grouped(
+//            basicAuthMiddleware,
+//            guardAuthMiddleware)
+//        // 4
+//        protected.post(use: create)
     }
     
     
@@ -70,7 +70,7 @@ struct IngredientController: RouteCollection {
     }
     
     func delete(req: Request) throws ->
-    EventLoopFuture<HTTPStatus>{
+    EventLoopFuture<HTTPStatus> {
         
         Ingredient
         // recherche une recette en fonction de ce qu'on se passe dans l'url
