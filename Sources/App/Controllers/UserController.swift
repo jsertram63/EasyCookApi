@@ -67,6 +67,12 @@ struct UsersController: RouteCollection {
             .flatMap{$0.delete(on: req.db)
                     .transform(to: .ok)
             }
+            // TODO : TROUVER LES RECETTES DE L'UTILISATEUR
+            // supprimer les recettes les unes apres les autres
+            // supprimer utilisateur
+        
+        
+        
     }
     
     
