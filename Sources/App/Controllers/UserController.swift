@@ -48,4 +48,22 @@ struct UsersController: RouteCollection {
           .unwrap(or: Abort(.notFound))
           .convertToPublic()
     }
+    
+    func delete(req: Request) throws ->
+    EventLoopFuture<HTTPStatus>{
+        
+        Utilisateur
+        // recherche une recette en fonction de ce qu'on se passe dans l'url
+            .find(req.parameters
+                  // récupération de la recette avec l'id
+                .get("userID"), on: req.db)
+        // on la déballe si trouvé sinon on renvoie un status d'errer
+            .unwrap(or: Abort(.notFound))
+        // suppression en base de données
+            .flatMap{$0.delete(on: req.db)
+                    .transform(to: .ok)
+            }
+    }
+    
+    
 }
