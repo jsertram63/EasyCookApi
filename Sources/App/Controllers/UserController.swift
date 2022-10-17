@@ -20,6 +20,10 @@ struct UsersController: RouteCollection {
     usersRoute.get(use: getAllHandler)
       // 2
     usersRoute.get(":userID", use: getHandler)
+      
+    usersRoute.group(":userID") { utilisateur in
+          utilisateur.delete(use:delete)
+    }
   }
 
   // 5
