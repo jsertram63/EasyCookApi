@@ -26,11 +26,11 @@ struct IngredientController: RouteCollection {
         }
         
         // 3
-        let protected = ingredients.grouped(
-            basicAuthMiddleware,
-            guardAuthMiddleware)
+        //let protected = ingredients.grouped(
+        //    basicAuthMiddleware,
+        //    guardAuthMiddleware)
         // 4
-        protected.post(use: create)
+        //protected.post(use: create)
     }
     
     
